@@ -1,6 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SkalProj_Datastrukturer_Minne
+
+/*
+1. Hur fungerar stacken och heapen? Förklara gärna med exempel eller skiss på dess grundläggande funktion
+Svar: Stacken "staplar" värden så att det senast inlagda kan anses vara "överst" och är det första tillgängliga och sedan nedåt så
+att det först inlagda är det sista man kan läsa.
+
+Heapen lagrar värden "intill" varandra så att man kan komma åt vilket av värdena som helst när som helst.
+
+2. Vad är Value Types repsektive Reference Types och vad skiljer dem åt?
+Svar: Value Types innehåller själva värdet medans Reference Types innehåller en pekare till en minnesposition där värdet finns.
+
+3. Följande metoder (se bild nedan) genererar olika svar. Den första returnerar 3, den andra returnerar 4, varför?
+Svar på metod1: För att x och y är Value Types. x sätts till 3 och y sätts till x (alltså 3), men sedan sätts y om till 4, vilket inte
+påverkar x eftersom det är en Value Type så när x returneras innehåller den fortfarande ursprungsvärdet 3.
+
+Svar på metod2: För att x och y är object skapade från Klassen MyInt, dvs de är Reference Types.
+x får värdet 3 och y får värdet x vilket betyder att både x och y pekar på samma minnesarea.
+När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
+
+ */
 {
     class Program
     {
@@ -13,6 +34,7 @@ namespace SkalProj_Datastrukturer_Minne
 
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
@@ -70,14 +92,68 @@ namespace SkalProj_Datastrukturer_Minne
              * In both cases, look at the count and capacity of the list
              * As a default case, tell them to use only + or -
              * Below you can see some inspirational code to begin working.
+             * 
+             * 
+             * 
+             *  2. När ökar listans kapacitet? (Alltså den underliggande arrayens storlek)
+             *  S: Var 4:e element man lägger till inkl det första.
+             *  
+                3. Med hur mycket ökar kapaciteten?
+                S: Arrayen ökar med 4 positioner varje gång.
+
+                4. Varför ökar inte listans kapacitet i samma takt som element läggs till?
+                S: För att spara prestanda då det är kostsamt att skapa om en array och behålla värdena i den.
+
+                5. Minskar kapaciteten när element tas bort ur listan?
+                S: Nej
+
+                6. När är det då fördelaktigt att använda en egendefinierad array istället för en lista?
+                S: När minnesanvändning är kritisk, eller om man vill använda värdena för beräkningar så underlättar arrayer
             */
+            bool doLoop = true;
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+            List<string> theList = new List<string>();
+ 
+            while (doLoop) {
 
-            //switch(nav){...}
+                Console.Clear();
+                Console.WriteLine("Type +WordToAdd or -WordToRemove or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch(nav.ToString().ToLower())
+                {
+                    case "+":
+                        theList.Add(value);
+                        break;
+
+                    case "-":
+                        theList.Remove(value);
+                        break;
+
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        //Console.WriteLine("Use +WordToAdd or -WordToRemove or 0 to Exit to Main Menu");
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine("TheList Capacity: " + theList.Capacity + ": " + String.Join(", ", theList));
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+
+            }
+
+
+
         }
 
         /// <summary>
