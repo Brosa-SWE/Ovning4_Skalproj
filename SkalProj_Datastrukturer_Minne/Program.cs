@@ -183,17 +183,17 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
             foreach (string flowEntry in queueFlow)
             {
-                QueueEntry queueEntry = new QueueEntry(flowEntry);
+                Entry queueEntry = new Entry(flowEntry);
 
-                switch (queueEntry.QueueAction)
+                switch (queueEntry.Action)
                 {
                     case "+":
-                        theQueue.Enqueue(queueEntry.QueueEntryValue);
+                        theQueue.Enqueue(queueEntry.EntryValue);
                         break;
 
                     case "-":
                         // theQueue.Dequeue() // Standard: Remove the first entry in the Queue
-                        theQueue = theQueue.Dequeue(queueEntry.QueueEntryValue); // Extension: Remove any entry in the Queue
+                        theQueue = theQueue.Dequeue(queueEntry.EntryValue); // Extension: Remove any entry in the Queue
                         break;
  
                     default:
@@ -201,7 +201,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
                 }
                 Console.WriteLine(" ");
-                Console.Write($"{queueEntry.QueueEntryStory}. --- Kön ser nu ut så här: {String.Join(", ", theQueue.ToArray())}");
+                Console.Write($"{queueEntry.EntryStory}. --- Kön ser nu ut så här: {String.Join(", ", theQueue.ToArray())}");
                 Console.WriteLine(" ");
                 Console.ReadKey();
 
@@ -252,7 +252,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
                 if (doLoop)
                 {
-                    Console.WriteLine("TheQueue Content: " + theQueue.Count + ": " + String.Join(", ", theQueue.ToArray()));
+                    Console.WriteLine($"TheQueue Content: {theQueue.Count} entries: {String.Join(", ", theQueue.ToArray())}");
                     Console.WriteLine(" ");
                     Console.WriteLine("Hit any key to continue...");
                     Console.ReadKey();
@@ -269,7 +269,54 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
              * Loop this method until the user inputs something to exit to main menue.
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
+             * 
+             * 1.   Varför är det inte så smart att använda en stack i det här fallet?
+             * S:   För att det inte alltid är den senast tillagda personen i kön som ska tas bort vilket gör att man
+             *      får skriva kod runt det problemet
+             * 
+             * 2.   Implementera en ReverseText-metod som läser in en sträng från användaren och
+                    med hjälp av en stack vänder ordning på teckenföljden för att sedan skriva ut
+                    den omvända strängen till användaren.
             */
+
+            bool doLoop = true;
+
+            Stack<string> theStack = new Stack<string>();
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Type +PersonToAddToStack or -PersonToRemoveFromStack or 0 to Exit to Main Menu");
+
+                Entry Entry = new Entry(Console.ReadLine());
+
+                switch (Entry.Action)
+                {
+                    case "+":
+                        theStack.Push(Entry.EntryValue);
+                        break;
+
+                    case "-":
+                        // Using Linq in Extension Method Pop in Class Extensions
+                        theStack = theStack.Pop(Entry.EntryValue);
+                        break;  
+
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine($"TheStack Content: {String.Join(", ", theStack.ToArray())}");
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
         }
 
         static void CheckParanthesis()

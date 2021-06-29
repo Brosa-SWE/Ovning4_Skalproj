@@ -14,5 +14,9 @@ namespace SkalProj_Datastrukturer_Minne
             return new Queue<string>(queue.Where(x => x != queueElementToRemove));
         }
 
-     }
+        public static Stack<string> Pop(this Stack<string> stack, String valueToRemove)
+        {
+            return new Stack<string>(stack.Where(x => x != valueToRemove));
+        }
+    }
 }
