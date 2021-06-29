@@ -35,11 +35,13 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
+                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 5, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
+                    + "\n5. Simulate ICA Queue"
+                    + "\n"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -64,6 +66,9 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         break;
                     case '4':
                         CheckParanthesis();
+                        break;
+                    case '5':
+                        TestQueue();
                         break;
                     /*
                      * Extend the menu to include the recursive 
@@ -138,7 +143,6 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         break;
 
                     default:
-                        //Console.WriteLine("Use +WordToAdd or -WordToRemove or 0 to Exit to Main Menu");
                         break;
                 }
 
@@ -156,6 +160,63 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
         }
 
+        static void TestQueue()
+        {
+            /*
+             1. Simulera följande kö:
+                a. ICA öppnar och kön till kassan är tom
+                b. Kalle ställer sig i kön
+                c. Greta ställer sig i kön
+                d. Kalle blir expedierad och lämnar kön
+                e. Stina ställer sig i kön
+                f. Greta blir expedierad och lämnar kön
+                g. Olle ställer sig i kön
+            */
+
+            Console.Clear();
+            Console.WriteLine("Queue Simulation. Press any key between each entry.");
+            Console.WriteLine(" ");
+
+            Queue<string> theQueue = new Queue<string>();
+
+            List<string> queueFlow = new List<string> { "+Kalle", "&Gref", "+Greta", "-Kalle", "+Stina", "-Greta", "+Olle" };
+
+            foreach (string flowEntry in queueFlow)
+            {
+                QueueEntry queueEntry = new QueueEntry(flowEntry);
+
+                switch (queueEntry.QueueAction)
+                {
+                    case "+":
+                        theQueue.Enqueue(queueEntry.QueueEntryLabel);
+                        break;
+
+                    case "-":
+                        theQueue = theQueue.Dequeue(queueEntry.QueueEntryLabel);
+                        break;
+ 
+                    default:
+                       
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Red;
+
+                        Console.WriteLine(" Entries in Queue Flow must start with + or - (Flow Entry: " + flowEntry + ") ");
+
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ReadKey();
+
+                        break;
+
+                }
+
+                Console.WriteLine("TheQueue Content: " + theQueue.Count + ": " + String.Join(", ", theQueue.ToArray()));
+                Console.WriteLine(" ");
+                Console.ReadKey();
+
+            }
+        }
+
         /// <summary>
         /// Examines the datastructure Queue
         /// </summary>
@@ -166,6 +227,46 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+            bool doLoop = true;
+
+            Queue<string> theQueue = new Queue<string>();
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Type +PersonToAddToQueue or -PersonToRemoveFromQueue or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch (nav.ToString().ToLower())
+                {
+                    case "+":
+                        theQueue.Enqueue(value);
+                        break;
+
+                    case "-":
+                        // Using Linq in Extension Method Dequeue in Class Extensions
+                        theQueue = theQueue.Dequeue(value);
+                        break;
+
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine("TheQueue Content: " + theQueue.Count + ": " + String.Join(", ", theQueue.ToArray()));
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
         }
 
         /// <summary>
