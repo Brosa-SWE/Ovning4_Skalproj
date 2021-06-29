@@ -14,5 +14,5 @@ namespace SkalProj_Datastrukturer_Minne
             return new Queue<string>(queue.Where(x => x != queueElementToRemove));
         }
 
-    }
+     }
 }

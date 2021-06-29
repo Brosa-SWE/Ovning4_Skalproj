@@ -188,30 +188,20 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                 switch (queueEntry.QueueAction)
                 {
                     case "+":
-                        theQueue.Enqueue(queueEntry.QueueEntryLabel);
+                        theQueue.Enqueue(queueEntry.QueueEntryValue);
                         break;
 
                     case "-":
                         // theQueue.Dequeue() // Standard: Remove the first entry in the Queue
-                        theQueue = theQueue.Dequeue(queueEntry.QueueEntryLabel); // Extension: Remove any entry in the Queue
+                        theQueue = theQueue.Dequeue(queueEntry.QueueEntryValue); // Extension: Remove any entry in the Queue
                         break;
  
                     default:
-                       
-                        Console.BackgroundColor = ConsoleColor.Yellow;
-                        Console.ForegroundColor = ConsoleColor.Red;
-
-                        Console.WriteLine(" Entries in Queue Flow must start with + or - (Flow Entry: " + flowEntry + ") ");
-
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.ReadKey();
-
                         break;
 
                 }
-
-                Console.WriteLine("TheQueue Content: " + theQueue.Count + ": " + String.Join(", ", theQueue.ToArray()));
+                Console.WriteLine(" ");
+                Console.Write($"{queueEntry.QueueEntryStory}. --- Kön ser nu ut så här: {String.Join(", ", theQueue.ToArray())}");
                 Console.WriteLine(" ");
                 Console.ReadKey();
 

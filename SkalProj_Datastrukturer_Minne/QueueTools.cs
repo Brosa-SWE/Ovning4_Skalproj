@@ -12,12 +12,29 @@ namespace SkalProj_Datastrukturer_Minne
     public class QueueEntry
     {
         public string QueueAction { get; }
-        public string QueueEntryLabel { get; }
+        public string QueueEntryValue { get; }
+        public string QueueEntryStory { get; }
 
         public QueueEntry (string sourceString)
         {
             QueueAction = sourceString[0].ToString();
-            QueueEntryLabel = sourceString.Substring(1);
+            QueueEntryValue = sourceString.Substring(1);
+
+            switch (QueueAction)
+            {
+                case "+":
+                    QueueEntryStory = $"{QueueEntryValue} ställer sig i kön";
+                    break;
+
+                case "-":
+                    QueueEntryStory = $"{QueueEntryValue} blir expedierad och lämnar kön";
+                    break;
+
+                default:
+                    QueueEntryStory = $"{sourceString} är inte ett giltigt värde";
+                    break;
+            }
+
         }
     }
 }
