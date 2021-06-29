@@ -41,7 +41,8 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
                     + "\n5. Simulate ICA Queue"
-                    + "\n"
+                    + "\n6. ReverseText"
+                     + "\n"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -70,6 +71,10 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                     case '5':
                         TestQueue();
                         break;
+                    case '6':
+                        ReverseText();
+                        break;
+
                     /*
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
@@ -260,6 +265,46 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             }
         }
 
+        /*
+         * 
+         * 2.   Implementera en ReverseText-metod som läser in en sträng från användaren och
+                med hjälp av en stack vänder ordning på teckenföljden för att sedan skriva ut
+                den omvända strängen till användaren.
+        */
+        static void ReverseText()
+        {
+            bool doLoop = true;
+
+            Stack<string> theStack = new Stack<string>();
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Type the text you want reversed or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        Console.WriteLine($"Reversed: {input.ToReverseString()}");
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+
         /// <summary>
         /// Examines the datastructure Stack
         /// </summary>
@@ -274,9 +319,6 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
              * S:   För att det inte alltid är den senast tillagda personen i kön som ska tas bort vilket gör att man
              *      får skriva kod runt det problemet
              * 
-             * 2.   Implementera en ReverseText-metod som läser in en sträng från användaren och
-                    med hjälp av en stack vänder ordning på teckenföljden för att sedan skriva ut
-                    den omvända strängen till användaren.
             */
 
             bool doLoop = true;
@@ -299,7 +341,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                     case "-":
                         // Using Linq in Extension Method Pop in Class Extensions
                         theStack = theStack.Pop(Entry.EntryValue);
-                        break;  
+                        break;
 
                     case "0":
                         doLoop = false;
@@ -326,9 +368,42 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+            bool doLoop = true;
 
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Type the text you want to check for Parenthesis Balanced or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        if (input.IsBalanced())
+                        {
+                            Console.WriteLine("The string IS Parenthesis Balanced");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ths string is NOT Parenthesis Balanaced");
+                        }
+
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
         }
 
     }
 }
-
