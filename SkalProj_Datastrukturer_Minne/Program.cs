@@ -192,7 +192,8 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         break;
 
                     case "-":
-                        theQueue = theQueue.Dequeue(queueEntry.QueueEntryLabel);
+                        // theQueue.Dequeue() // Standard: Remove the first entry in the Queue
+                        theQueue = theQueue.Dequeue(queueEntry.QueueEntryLabel); // Extension: Remove any entry in the Queue
                         break;
  
                     default:
