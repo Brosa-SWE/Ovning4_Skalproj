@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace SkalProj_Datastrukturer_Minne
 {
-    public static class Tools
-    {
-
-    }
-
+ 
     public class Entry
     {
         public string Action { get; }
@@ -39,4 +36,7 @@ namespace SkalProj_Datastrukturer_Minne
 
         }
     }
+
+ 
+
 }

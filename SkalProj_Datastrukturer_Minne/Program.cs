@@ -39,10 +39,11 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
-                    + "\n4. CheckParanthesis"
-                    + "\n5. Simulate ICA Queue"
-                    + "\n6. ReverseText"
-                     + "\n"
+                    + "\n4. CheckParanthesis()"
+                    + "\n5. TestQueue() - Simulate ICA Queue"
+                    + "\n6. ReverseText()"
+                    + "\n7. RecursiveOdd()"
+                    + "\n"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -73,6 +74,9 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         break;
                     case '6':
                         ReverseText();
+                        break;
+                    case '7':
+                        RecursiveOddTest();
                         break;
 
                     /*
@@ -123,8 +127,9 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             bool doLoop = true;
 
             List<string> theList = new List<string>();
- 
-            while (doLoop) {
+
+            while (doLoop)
+            {
 
                 Console.Clear();
                 Console.WriteLine("Type +WordToAdd or -WordToRemove or 0 to Exit to Main Menu");
@@ -133,7 +138,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                 char nav = input[0];
                 string value = input.Substring(1);
 
-                switch(nav.ToString().ToLower())
+                switch (nav.ToString().ToLower())
                 {
                     case "+":
                         theList.Add(value);
@@ -200,7 +205,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         // theQueue.Dequeue() // Standard: Remove the first entry in the Queue
                         theQueue = theQueue.Dequeue(queueEntry.EntryValue); // Extension: Remove any entry in the Queue
                         break;
- 
+
                     default:
                         break;
 
@@ -404,6 +409,81 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                 }
             }
         }
+
+        static int recursiveCounter = 0;
+
+        static void RecursiveOddTest()
+        {
+            int inputInt;
+            int resultInt;
+
+            bool doLoop = true;
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Type the integer you want to test RecursiveOdd() for or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        if (!int.TryParse(input, out resultInt))
+                        {
+                            Console.WriteLine("You must input an Integer value.");
+                            break;
+                        }
+
+                        resultInt = RecursiveOdd(resultInt);
+
+                        Console.WriteLine("Returned " + resultInt);
+
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+
+        }
+
+        static int RecursiveOdd(int inputInt)
+        {
+            //recursiveCounter += 1;
+
+            //if (recursiveCounter == 10)
+            //{
+            //    Console.WriteLine("Emergency Break!");
+            //    Console.WriteLine(" ");
+            //    Console.WriteLine("Hit any key to Exit Program");
+            //    Console.ReadKey();
+            //    Environment.Exit(0);
+            //}
+
+            //Console.WriteLine("---RecursiveOdd in: " + inputInt);
+            // int result;
+
+            if (inputInt == 0)
+            {
+                return 1;
+            }
+
+            return (RecursiveOdd(inputInt - 1) + 2);
+
+            // Console.WriteLine("---RecursiveOdd out: " + result);
+
+            // return result;
+        }
+
 
     }
 }
