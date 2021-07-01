@@ -43,6 +43,8 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                     + "\n5. TestQueue() - Simulate ICA Queue"
                     + "\n6. ReverseText()"
                     + "\n7. RecursiveOdd()"
+                    + "\n8. RecursiveEven()"
+                    + "\n9. RecursiveFibonacci()"
                     + "\n"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
@@ -76,7 +78,13 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         ReverseText();
                         break;
                     case '7':
-                        RecursiveOddTest();
+                        RecursiveOdd();
+                        break;
+                    case '8':
+                        RecursiveEven();
+                        break;
+                    case '9':
+                        RecursiveFibonacci();
                         break;
 
                     /*
@@ -410,9 +418,8 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             }
         }
 
-        static int recursiveCounter = 0;
-
-        static void RecursiveOddTest()
+ 
+        static void RecursiveOdd()
         {
             int inputInt;
             int resultInt;
@@ -433,15 +440,16 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         break;
 
                     default:
-                        if (!int.TryParse(input, out resultInt))
+                        if (!int.TryParse(input, out inputInt))
                         {
                             Console.WriteLine("You must input an Integer value.");
                             break;
                         }
 
-                        resultInt = RecursiveOdd(resultInt);
+                        resultInt = FindNthOdd(inputInt);
 
-                        Console.WriteLine("Returned " + resultInt);
+                        Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} ODD Number is {resultInt} (1 is not counted)");
+
 
                         break;
                 }
@@ -456,32 +464,161 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
         }
 
-        static int RecursiveOdd(int inputInt)
+        static int FindNthOdd(int inputInt)
         {
-            //recursiveCounter += 1;
-
-            //if (recursiveCounter == 10)
-            //{
-            //    Console.WriteLine("Emergency Break!");
-            //    Console.WriteLine(" ");
-            //    Console.WriteLine("Hit any key to Exit Program");
-            //    Console.ReadKey();
-            //    Environment.Exit(0);
-            //}
-
-            //Console.WriteLine("---RecursiveOdd in: " + inputInt);
-            // int result;
 
             if (inputInt == 0)
             {
                 return 1;
             }
 
-            return (RecursiveOdd(inputInt - 1) + 2);
+            return (FindNthOdd(inputInt - 1) + 2);
 
-            // Console.WriteLine("---RecursiveOdd out: " + result);
+        }
 
-            // return result;
+        static void RecursiveEven()
+        {
+            int inputInt;
+            int resultInt;
+
+            bool doLoop = true;
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Type the integer you want to test RecursiveEven() for or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        if (!int.TryParse(input, out inputInt))
+                        {
+                            Console.WriteLine("You must input an Integer value.");
+                            break;
+                        }
+
+                        resultInt = FindNthEven(inputInt);
+
+                        Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} EVEN Number is {resultInt}");
+
+
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+
+        }
+
+        static int FindNthEven(int inputInt)
+        {
+            Console.WriteLine("In " + inputInt);
+
+            if (inputInt > 20)
+            {
+                Environment.Exit(0);
+            }
+
+
+            if (inputInt == 0)
+            {
+                return 1;
+            }
+
+            return (FindNthEven(inputInt) + 1);
+
+        }
+
+        static void RecursiveFibonacci()
+        {
+            int inputInt;
+            int resultInt;
+
+            bool doLoop = true;
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Enter what n'th FIBONACCI Number you want or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        if (!int.TryParse(input, out inputInt))
+                        {
+                            Console.WriteLine("You must input an Integer value.");
+                            break;
+                        }
+
+                        if (inputInt > 30)
+                        {
+                            Console.WriteLine("Try with a smaller number, this will take too long to calculate...");
+                            break;
+                        }
+                        resultInt = FindNthFibonacciNumber(inputInt);
+
+                        Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} FIBONACCI Number is {resultInt}");
+
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+
+        }
+
+
+        static int FindNthFibonacciNumber(int n)
+        {
+
+            if (n == 1 || n == 2) return 1;
+
+            int nthfibonacciNumber = FindNthFibonacciNumber(n - 1) + FindNthFibonacciNumber(n - 2);
+            return nthfibonacciNumber;
+        }
+
+
+        static string GetNthEnding(int inputInt)
+        {
+            switch (inputInt) {
+                case 0:
+                    return "";
+
+
+                case 1:
+                    return "'st";
+
+                case 2:
+                    return "'nd";
+
+                case 3:
+                    return "'rd";
+
+                default:
+                    return "'th";
+            }
         }
 
 
