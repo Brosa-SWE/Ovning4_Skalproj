@@ -418,7 +418,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             }
         }
 
- 
+
         static void RecursiveOdd()
         {
             int inputInt;
@@ -429,7 +429,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             while (doLoop)
             {
                 Console.Clear();
-                Console.WriteLine("Type the integer you want to test RecursiveOdd() for or 0 to Exit to Main Menu");
+                Console.WriteLine("Find the N'th ODD number with RecursiveOdd() or 0 to Exit to Main Menu");
 
                 string input = Console.ReadLine();
 
@@ -478,6 +478,15 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
         static void RecursiveEven()
         {
+
+            Console.WriteLine(" ");
+            Console.WriteLine("Not implemented" +
+                "" +
+                "...");
+            Console.ReadKey();
+
+            return;
+
             int inputInt;
             int resultInt;
 
@@ -486,7 +495,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             while (doLoop)
             {
                 Console.Clear();
-                Console.WriteLine("Type the integer you want to test RecursiveEven() for or 0 to Exit to Main Menu");
+                Console.WriteLine("Find the N'th EVEN number with RecursiveEven() or 0 to Exit to Main Menu");
 
                 string input = Console.ReadLine();
 
@@ -521,23 +530,34 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
         }
 
+        static private int ebrake = 0;
+
         static int FindNthEven(int inputInt)
         {
-            Console.WriteLine("In " + inputInt);
 
-            if (inputInt > 20)
+           Console.WriteLine("In " + inputInt);
+
+            ebrake++;
+
+            if (ebrake == 10)
             {
+                Console.WriteLine("Emergency break, Press any key to quit");
+                Console.ReadKey();
+
                 Environment.Exit(0);
             }
 
+            int result = 1;
 
             if (inputInt == 0)
-            {
                 return 1;
+
+          
+            for (int i = inputInt; i >= 1; i--)
+            {
+                result = result * i;
             }
-
-            return (FindNthEven(inputInt) + 1);
-
+            return result;
         }
 
         static void RecursiveFibonacci()
@@ -602,7 +622,8 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
         static string GetNthEnding(int inputInt)
         {
-            switch (inputInt) {
+            switch (inputInt)
+            {
                 case 0:
                     return "";
 
