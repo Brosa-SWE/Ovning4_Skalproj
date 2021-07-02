@@ -45,12 +45,15 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                     + "\n7. RecursiveOdd()"
                     + "\n8. RecursiveEven()"
                     + "\n9. RecursiveFibonacci()"
+                    + "\nA. IterativeEven()"
+                    + "\nB. IterativeFibonacci()"
                     + "\n"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
                 {
-                    input = Console.ReadLine()[0]; //Tries to set input to the first char in an input line
+                    char v = Console.ReadLine()[0];
+                    input = v; //Tries to set input to the first char in an input line
                 }
                 catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
                 {
@@ -85,6 +88,14 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         break;
                     case '9':
                         RecursiveFibonacci();
+                        break;
+                    case 'A':
+                    case 'a':
+                        IterativeEven();
+                        break;
+                    case 'B':
+                    case 'b':
+                        IterativeFibonacci();
                         break;
 
                     /*
@@ -479,13 +490,6 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
         static void RecursiveEven()
         {
 
-            Console.WriteLine(" ");
-            Console.WriteLine("Not implemented" +
-                "" +
-                "...");
-            Console.ReadKey();
-
-            return;
 
             int inputInt;
             int resultInt;
@@ -512,7 +516,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                             break;
                         }
 
-                        resultInt = FindNthEven(inputInt);
+                        resultInt = FindNthEven(inputInt) - 1;
 
                         Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} EVEN Number is {resultInt}");
 
@@ -535,7 +539,7 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
         static int FindNthEven(int inputInt)
         {
 
-           Console.WriteLine("In " + inputInt);
+            Console.WriteLine("In " + inputInt);
 
             ebrake++;
 
@@ -547,17 +551,14 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                 Environment.Exit(0);
             }
 
-            int result = 1;
+            // START - OBS - Detta är en kopia av ODD-metoden
 
             if (inputInt == 0)
-                return 1;
-
-          
-            for (int i = inputInt; i >= 1; i--)
             {
-                result = result * i;
+                return 1;
             }
-            return result;
+
+            return (FindNthEven(inputInt - 1) + 2);
         }
 
         static void RecursiveFibonacci()
@@ -594,11 +595,11 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
                         }
                         resultInt = FindNthFibonacciNumber(inputInt);
 
-                        Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} FIBONACCI Number is {resultInt}");
+                        Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} FIBONACCI Number is {resultInt} (0 not counted)");
 
                         break;
                 }
-
+                    
                 if (doLoop)
                 {
                     Console.WriteLine(" ");
@@ -608,7 +609,6 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             }
 
         }
-
 
         static int FindNthFibonacciNumber(int n)
         {
@@ -622,12 +622,24 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
 
         static string GetNthEnding(int inputInt)
         {
+            int orgInputInt = inputInt;
+
+            if (inputInt > 20)
+            {
+                inputInt = int.Parse(inputInt.ToString().Right(1));
+            }
+
             switch (inputInt)
             {
                 case 0:
-                    return "";
-
-
+                    if (orgInputInt == 0)
+                    {
+                        return "";
+                    }
+                    else
+                    {
+                        return "'th";
+                    }
                 case 1:
                     return "'st";
 
@@ -642,6 +654,126 @@ När sedan y sätts om till 4 betyder detta att även x.MyValue returnerar 4.
             }
         }
 
+        static void IterativeEven()
+        {
+            int inputInt;
 
+            bool doLoop = true;
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Find the N'th EVEN number with IterativeEven() or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        if (!int.TryParse(input, out inputInt))
+                        {
+                            Console.WriteLine("You must input an Integer value.");
+                            break;
+                        }
+
+                        int lastEvenNo = inputInt * 2;
+
+                        int noOfFoundEven = 0;
+                        int i; ;
+
+                        for (i = 0; i < lastEvenNo; i += 2)
+                        {
+                            noOfFoundEven++;
+                            Console.WriteLine($"found: {noOfFoundEven}, i: {i}");
+                        }
+
+                        Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} EVEN Number is {i}");
+
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+
+        }
+
+        static void IterativeFibonacci()
+        {
+            int inputInt;
+            int resultInt;
+
+            bool doLoop = true;
+
+            while (doLoop)
+            {
+                Console.Clear();
+                Console.WriteLine("Enter what n'th FIBONACCI Number you want to find with Iterative loop or 0 to Exit to Main Menu");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "0":
+                        doLoop = false;
+                        break;
+
+                    default:
+                        if (!int.TryParse(input, out inputInt))
+                        {
+                            Console.WriteLine("You must input an Integer value.");
+                            break;
+                        }
+
+                        if (inputInt > 30)
+                        {
+                            Console.WriteLine("Try with a smaller number, this will take too long to calculate...");
+                            break;
+                        }
+
+                        int newValue = 0;
+                        int[] numbers = new int[2] { 0, 1 };
+
+                        for (int i = 0; i < inputInt; i++)
+                        {
+                            // 0, 1, 1, 2, 3, 5, 8, 13'
+
+                            if (i == 1) 
+                            {
+                                newValue = 1;
+                            }
+                            else
+                            {
+                            newValue = numbers[0] + numbers[1];
+                            }
+                            numbers[0] = numbers[1];
+                            numbers[1] = newValue;
+
+                            // Console.WriteLine($"i: {i}, {numbers[0]}, {numbers[1]}, Fibonacci: {newValue}");
+
+                        }
+ 
+                        Console.WriteLine($"The {inputInt}{GetNthEnding(inputInt)} FIBONACCI Number is {newValue} (0 not counted)");
+
+                        break;
+                }
+
+                if (doLoop)
+                {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Hit any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+
+        }
     }
 }

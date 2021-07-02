@@ -93,5 +93,12 @@ namespace SkalProj_Datastrukturer_Minne
             return result;
         }
 
+        public static string Right(this string source, int right_length)
+        {
+            if (right_length >= source.Length)
+                return source;
+            return source.Substring(source.Length - right_length);
+        }
+
     }
 }
